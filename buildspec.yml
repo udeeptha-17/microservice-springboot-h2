@@ -1,10 +1,5 @@
 version: 0.2
 
-env:
-  parameter-store:
-    DOCKER_HUB_USERNAME: "unb1993"
-    DOCKER_HUB_PASSWORD: "Unb@1993"
-    # store with: aws ssm put-parameter --name "docker_hub_username" --value "<username value>" --type String
 phases:
   install:
     commands:
@@ -28,7 +23,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Docker Hub...
-      - docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
+      - docker login -u unb1993 -p Unb1993
   build:
     commands:
       - echo Build started on `date`

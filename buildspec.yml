@@ -28,17 +28,21 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - TODAY=$(date '+%Y%m%d')
+      - IMAGE_TAG=r_${TODAY}_${COMMIT_HASH}
+      - echo IMAGE_TAG=${IMAGE_TAG}
       - echo $IMAGE_TAG > code_hash.txt
-      - docker build -t unb1993/$PROJECT_NAME:$IMAGE_TAG .
-      - docker tag unb1993/$PROJECT_NAME:$IMAGE_TAG unb1993/$PROJECT_NAME:$IMAGE_WORD_TAG
+      - docker build -t unb1993/msspringbooth2:"${IMAGE_TAG}" .
+      - docker tag unb1993/msspringbooth2:"${IMAGE_TAG}" unb1993/msspringbooth2:$IMAGE_WORD_TAG
       # - docker build -t myimage .
   post_build:
     commands:
       - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push unb1993/$PROJECT_NAME:$IMAGE_TAG
-      - docker push unb1993/$PROJECT_NAME:$IMAGE_WORD_TAG
+      - docker push unb1993/msspringbooth2:$IMAGE_TAG
+      - docker push unb1993/msspringbooth2:$IMAGE_WORD_TAG
       # - docker pull anchore/cli
       # - docker run -d -v $(pwd):/source-dir -v /var/run/docker.sock:/var/run/docker.sock --name anchore anchore/cli:latest
       # - docker exec anchore anchore feeds sync

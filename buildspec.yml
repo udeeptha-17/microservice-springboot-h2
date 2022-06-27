@@ -31,8 +31,8 @@ phases:
       - echo CodeBuild Source Version  ${CODEBUILD_SOURCE_VERSION}
       - echo CodeBuild Resolved Source Version  $CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $IMAGE_TAG > code_hash.txt
-      - docker build -t unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION} .
-      - docker tag unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION} unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION}
+      - docker build -t unb1993/msspringbooth2:$CODEBUILD_SOURCE_VERSION .
+      - docker tag unb1993/msspringbooth2:$CODEBUILD_SOURCE_VERSION unb1993/msspringbooth2:$CODEBUILD_SOURCE_VERSION
       # - docker build -t myimage .
   post_build:
     commands:

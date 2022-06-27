@@ -22,11 +22,11 @@ ARG JAR_FILE=/usr/app/target/*.jar
 
 FROM adoptopenjdk/openjdk11:alpine
 
-RUN echo $JAR_FILE
+RUN echo ${JAR_FILE}
 
 WORKDIR /usr/app
 
-COPY --from=build $JAR_FILE /usr/app/app.jar
+COPY --from=build ${JAR_FILE} /usr/app/app.jar
 
 WORKDIR /usr/app
 

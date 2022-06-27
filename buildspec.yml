@@ -33,16 +33,15 @@ phases:
       - echo $IMAGE_TAG > code_hash.txt
       - echo IMAGE TAG is $IMAGE_TAG
       - echo IMAGE WORLD TAG is $IMAGE_WORD_TAG
-      - docker build -t unb1993/msspringbooth2:latest .
-      - docker tag unb1993/msspringbooth2:latest unb1993/msspringbooth2:$IMAGE_WORD_TAG
+      - docker build -t unb1993/msspringbooth2:$IMAGE_TAG .
+      - docker tag unb1993/msspringbooth2:$IMAGE_TAG unb1993/msspringbooth2:latest
       # - docker build -t myimage .
   post_build:
     commands:
       - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push unb1993/msspringbooth2:$IMAGE_TAG
-      - docker push unb1993/msspringbooth2:$IMAGE_WORD_TAG
+      - docker push unb1993/msspringbooth2:latest
       # - docker pull anchore/cli
       # - docker run -d -v $(pwd):/source-dir -v /var/run/docker.sock:/var/run/docker.sock --name anchore anchore/cli:latest
       # - docker exec anchore anchore feeds sync

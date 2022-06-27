@@ -24,6 +24,7 @@ phases:
       - echo Logging in to Docker Hub...
       - docker login -u unb1993 -p Unb@1993
       - IMAGE_TAG=$(echo $CODEBUILD_SOURCE_VERSION | cut -c 1-7)
+      - BUILD_NUMBER=$(echo $CODEBUILD_BUILD_NUMBER)
       - echo IMAGE_TAG is $IMAGE_TAG
   build:
     commands:
@@ -32,9 +33,10 @@ phases:
       - echo CodeBuild Source Version  ${CODEBUILD_SOURCE_VERSION}
       - echo $IMAGE_TAG > code_hash.txt
       - echo IMAGE TAG is $IMAGE_TAG
+      - echo Build Number is $BUILD_NUMBER
       - echo IMAGE WORLD TAG is $IMAGE_WORD_TAG
-      - docker build -t unb1993/msspringbooth2:$IMAGE_TAG .
-      - docker tag unb1993/msspringbooth2:$IMAGE_TAG unb1993/msspringbooth2:latest
+      - docker build -t unb1993/msspringbooth2:$BUILD_NUMBER .
+      - docker tag unb1993/msspringbooth2:$BUILD_NUMBER unb1993/msspringbooth2:latest
       # - docker build -t myimage .
   post_build:
     commands:
@@ -42,6 +44,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push unb1993/msspringbooth2:latest
+      - docker push unb1993/msspringbooth2:$BUILD_NUMBER
       # - docker pull anchore/cli
       # - docker run -d -v $(pwd):/source-dir -v /var/run/docker.sock:/var/run/docker.sock --name anchore anchore/cli:latest
       # - docker exec anchore anchore feeds sync

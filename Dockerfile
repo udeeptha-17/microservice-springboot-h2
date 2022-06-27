@@ -12,22 +12,10 @@ COPY pom.xml /usr/app
 
 WORKDIR /usr/app
 
-RUN mvn clean install -DskipTests
-
-RUN file="$(ls -1 /usr/app)" && echo $file
-
-RUN file="$(ls -1 /usr/app/target)" && echo $file
-
-ARG JAR_FILE=/usr/app/target/*.jar
+RUN mvn clean package -DskipTests
 
 FROM adoptopenjdk/openjdk11:alpine
 
-RUN echo ${JAR_FILE}
+COPY --from=build /usr/app/target/microservice-springboot-h2-0.0.1-SNAPSHOT.jar /usr/app/app.jar
 
-WORKDIR /usr/app
-
-COPY --from=build ${JAR_FILE} /usr/app/app.jar
-
-WORKDIR /usr/app
-
-ENTRYPOINT ["java","-jar","./app.jar"]
+ENTRYPOINT ["java","-jar","/usr/app/app.jar"]

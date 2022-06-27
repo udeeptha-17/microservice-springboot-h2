@@ -40,7 +40,7 @@ phases:
       # - docker build -t myimage .
   post_build:
     commands:
-      - printf '[{"name":"example-backend","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"springbooth2","imageUri":"%s"}]' unb1993/msspringbooth2:latest > imagedefinitions.json
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push unb1993/msspringbooth2:latest

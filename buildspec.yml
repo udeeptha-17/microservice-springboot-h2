@@ -28,13 +28,11 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - TODAY=$(date '+%Y%m%d')
-      - IMAGE_TAG=r_${TODAY}_${COMMIT_HASH}
-      - echo IMAGE_TAG=${IMAGE_TAG}
+      - echo CodeBuild Source Version  ${CODEBUILD_SOURCE_VERSION}
+      - echo CodeBuild Resolved Source Version  $CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $IMAGE_TAG > code_hash.txt
-      - docker build -t unb1993/msspringbooth2:"${IMAGE_TAG}" .
-      - docker tag unb1993/msspringbooth2:"${IMAGE_TAG}" unb1993/msspringbooth2:$IMAGE_WORD_TAG
+      - docker build -t unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION} .
+      - docker tag unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION} unb1993/msspringbooth2:${CODEBUILD_SOURCE_VERSION}
       # - docker build -t myimage .
   post_build:
     commands:

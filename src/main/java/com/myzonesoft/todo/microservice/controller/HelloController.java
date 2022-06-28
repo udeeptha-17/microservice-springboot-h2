@@ -12,7 +12,7 @@ public class HelloController {
 
     @GetMapping
     public String getAllTasks() {
-        return "Hello World!!!";
+        return "Hello World AND Galaxy!!!";
     }
 
 }
